@@ -30,6 +30,7 @@ public class Player extends Entity{
         this.gp = gp;
         this.keyH = keyH;
 
+        //SETTING PLAYER BOUNDARIES, ADJUST BASED ON TILE SIZE
         solidArea = new Rectangle();
        //upper left corner of the blocked "solid" area on the character
         solidArea.x = gp.tileSize/6;
