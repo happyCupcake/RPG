@@ -31,12 +31,17 @@ public class Player extends Entity{
         this.keyH = keyH;
 
         solidArea = new Rectangle();
-        //upper left corner of the blocked "solid" area on the character
-        solidArea.x = (1/6) * gp.tileSize;
-        solidArea.y = (1/3) * gp.tileSize;
+       //upper left corner of the blocked "solid" area on the character
+        solidArea.x = gp.tileSize/6;
+        solidArea.y = gp.tileSize/3;
         //size of the blocked "solid" area on the character
-        solidArea.width = (2/3) * gp.tileSize;
-        solidArea.height = (2/3) * gp.tileSize;
+        solidArea.width = (gp.tileSize*5)/12;
+        solidArea.height = (gp.tileSize*5)/12;
+
+        /*solidArea.x = 8;
+        solidArea.y = 16;
+        solidArea.width = 32;
+        solidArea.height = 32;*/
 
         setDefaultValues();
         getPlayerImage();
