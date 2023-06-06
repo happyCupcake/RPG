@@ -7,6 +7,7 @@ import java.awt.Graphics2D;
 
 import javax.swing.JPanel;
 import entity.Player;
+import object.SuperObject;
 import tile.TileManager;
 
 public class GamePanel extends JPanel implements Runnable{
@@ -43,6 +44,7 @@ public class GamePanel extends JPanel implements Runnable{
     public CollisionChecker cChecker = new CollisionChecker(this);
     public Player player = new Player(this, keyH);
     TileManager tileM = new TileManager(this);
+    public SuperObject obj[] = new SuperObject[10]; //10 is # of objects displayed in game at a time
 
 
     public GamePanel(){
