@@ -39,13 +39,17 @@ public class GamePanel extends JPanel implements Runnable{
     //FPS
     int fps = 60; 
 
+    //SYSTEM
     TileManager tileM = new TileManager(this);
-    Thread gameThread; //like a clock
     KeyHandler keyH = new KeyHandler();
+    Sound sound = new Sound();
     public CollisionChecker cChecker = new CollisionChecker(this);
+    public AssetSetter aSetter = new AssetSetter(this);
+    Thread gameThread; //like a clock
+
+    //ENTITY AND OBJECT
     public Player player = new Player(this, keyH);
     public SuperObject obj[] = new SuperObject[10]; //10 is # of objects displayed in game at a time
-    public AssetSetter aSetter = new AssetSetter(this);
 
 
 
@@ -124,6 +128,12 @@ public class GamePanel extends JPanel implements Runnable{
         player.draw(g2);
 
         g2.dispose();
+    }
+
+    public void playMusic(int i){
+        sound.setFile(i);
+        sound.play();
+        sound.loop();
     }
 
 }
