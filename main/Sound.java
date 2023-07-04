@@ -14,10 +14,10 @@ public class Sound {
 
     public Sound(){
         soundURL[0] = getClass().getResource("sound/theme.wav");
-        soundURL[1] = getClass().getResource("sound/pickKey.wav");
-        soundURL[2] = getClass().getResource("sound/pickBoots.wav");
-        soundURL[3] = getClass().getResource("sound/door.wav");
-        soundURL[4] = getClass().getResource("sound/pickBoots.wav");
+        soundURL[1] = getClass().getResource("sound/coin.wav");
+        soundURL[2] = getClass().getResource("sound/fanfare.wav");
+        soundURL[3] = getClass().getResource("sound/openDoor.wav");
+        soundURL[4] = getClass().getResource("sound/fanfare.wav");
 
     }
 

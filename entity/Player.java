@@ -2,12 +2,15 @@ package entity;
 
 import main.GamePanel;
 import main.KeyHandler;
+import main.UtilityTool;
+
 import java.awt.Graphics2D;
 import java.io.IOException;
 import java.awt.image.*;
 import java.awt.Rectangle;
 
 import javax.imageio.ImageIO;
+import javax.swing.text.Utilities;
 
 // import com.apple.laf.ScreenMenuBar;
 
@@ -21,7 +24,7 @@ public class Player extends Entity{
     public final int screenX;
     public final int screenY;
 
-    int hasKey = 0;
+    public int hasKey = 0;
 
     public Player(GamePanel gp, KeyHandler keyH){
 
@@ -48,26 +51,37 @@ public class Player extends Entity{
         getPlayerImage();
     }
     public void setDefaultValues(){
-        worldX=  gp.tileSize*23;
-        worldY =gp.tileSize *21;
-        speed =4;
+        worldX = gp.tileSize*23;
+        worldY = gp.tileSize *21;
+        speed = 4;
         direction="up";
     }
 
     public void getPlayerImage(){
-        try{
-            up1 = ImageIO.read(getClass().getResourceAsStream("imgs/boy_back_1.png"));
-            up2 = ImageIO.read(getClass().getResourceAsStream("imgs/boy_back_2.png"));
-            down1 = ImageIO.read(getClass().getResourceAsStream("imgs/boy_forward_1.png"));
-            down2 = ImageIO.read(getClass().getResourceAsStream("imgs/boy_forward_2.png"));
-            left1 = ImageIO.read(getClass().getResourceAsStream("imgs/boy_left_1.png"));
-            left2 = ImageIO.read(getClass().getResourceAsStream("imgs/boy_left_2.png"));
-            right1 = ImageIO.read(getClass().getResourceAsStream("imgs/boy_right_1.png"));
-            right2 = ImageIO.read(getClass().getResourceAsStream("imgs/boy_right_2.png"));
 
+        up1 = setup("boy_back_1");
+        up2 = setup("boy_back_2");
+        down1 = setup("boy_forward_1");
+        down2 = setup("boy_forward_2");
+        left1 = setup("boy_left_1");
+        left2 = setup("boy_left_2");
+        right1 = setup("boy_right_1");
+        right2 = setup("boy_right_2");
+        
+    }
+
+    public BufferedImage setup(String imageName){
+        UtilityTool uTool = new UtilityTool();
+        BufferedImage image = null;
+
+        try{
+            image = ImageIO.read(getClass().getResourceAsStream("imgs/" + imageName +".png"));
+            image = uTool.scaleImage(image, gp.tileSize, gp.tileSize);
         }catch(IOException e){
             e.printStackTrace();
         }
+        return image;
+
     }
 
     public void update(){
@@ -127,26 +141,36 @@ public class Player extends Entity{
 
     public void pickUpObject(int i){
         if(i != 999){
+
             String objectName = gp.obj[i].name;
+
             switch(objectName){
                 case "Key":
                     gp.playSE(1);
                     hasKey++;
                     gp.obj[i] = null;
+                    gp.ui.showMessage("You got a Key!");
                     break;
                 case "Door":
                     if(hasKey > 0){
                         gp.playSE(3);
                         hasKey --;
                         gp.obj[i] = null;
+                        gp.ui.showMessage("You opened the door!");
+                    }else{
+                        gp.ui.showMessage("You need a key!");
                     }
                     break;
                 case "Chest":
+                    gp.ui.gameFinished = true;
+                    gp.stopMusic();
+                    gp.playSE(4);
                     break;
                 case "Boots":
                     gp.playSE(2);
                     speed +=1;
                     gp.obj[i] = null;
+                    gp.ui.showMessage("Speed up!");
                     break;
             }
         }
@@ -160,9 +184,11 @@ public class Player extends Entity{
         if(direction == "up"){
             if(spriteNum==1){
                 image = up1;
+                //System.out.println("up1");
             }
             if(spriteNum ==2){
                 image = up2;
+                //System.out.println("up2");
             }
         }if(direction == "down"){
             if(spriteNum==1){
@@ -186,9 +212,7 @@ public class Player extends Entity{
             
         }
 
-        //image = up1;
-
-        g2.drawImage(image, screenX, screenY, gp.tileSize, gp.tileSize, null);
+        g2.drawImage(image, screenX, screenY, null);
 
     }
 }
