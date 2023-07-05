@@ -18,7 +18,6 @@ import java.awt.Color;
 
 public class Player extends Entity{
 
-    GamePanel gp;
     KeyHandler keyH;
 
     public final int screenX;
@@ -28,11 +27,11 @@ public class Player extends Entity{
 
     public Player(GamePanel gp, KeyHandler keyH){
 
+        super(gp);
+
         screenX = gp.screenWidth/2 - gp.tileSize/2;
         screenY = gp.screenHeight/2 - gp.tileSize/2;
 
-
-        this.gp = gp;
         this.keyH = keyH;
 
         //SETTING PLAYER BOUNDARIES, ADJUST BASED ON TILE SIZE
@@ -59,14 +58,14 @@ public class Player extends Entity{
 
     public void getPlayerImage(){
 
-        up1 = setup("boy_back_1");
-        up2 = setup("boy_back_2");
-        down1 = setup("boy_forward_1");
-        down2 = setup("boy_forward_2");
-        left1 = setup("boy_left_1");
-        left2 = setup("boy_left_2");
-        right1 = setup("boy_right_1");
-        right2 = setup("boy_right_2");
+        up1 = setup("player/boy_back_1");
+        up2 = setup("player/boy_back_2");
+        down1 = setup("player/boy_forward_1");
+        down2 = setup("player/boy_forward_2");
+        left1 = setup("player/boy_left_1");
+        left2 = setup("player/boy_left_2");
+        right1 = setup("player/boy_right_1");
+        right2 = setup("player/boy_right_2");
         
     }
 
@@ -108,6 +107,11 @@ public class Player extends Entity{
             int objIndex = gp.cChecker.checkObject(this, true);
             pickUpObject(objIndex);
 
+            //CHECK NPC COLLISION
+            int npcIndex = gp.cChecker.checkEntity(this, gp.npc);
+            interactNPC(npcIndex);
+
+
             //IF COLLISION IS FALSE, PLAYER CAN MOVE
             if(collisionOn == false){
                 switch(direction){
@@ -142,6 +146,12 @@ public class Player extends Entity{
     public void pickUpObject(int i){
         if(i != 999){
 
+        }
+    }
+
+    public void interactNPC(int i){
+        if(i!=999) {
+            //System.out.println("NPC!");
         }
     }
 
