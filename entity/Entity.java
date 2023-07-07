@@ -18,7 +18,7 @@ public class Entity {
 
     public BufferedImage up1, up2, down1, down2, left1, left2, right1, right2;
 
-    public String direction;
+    public String direction = "down";
     public int spriteCounter = 0;
     public int spriteNum =1;
 
@@ -27,13 +27,44 @@ public class Entity {
     public boolean collisionOn = false;
 
     public int actionClockCounter = 0;
+
+    String dialogues[] = new String[20];
+    int dialogueIndex = 0;
+
+    public BufferedImage image, image2, image3;
+    public String name;
+    public boolean collision = false;
+
+    //CHARACTER STATUS
+    public int maxLife;
+    public int life;
     
     public Entity(GamePanel gp){
         this.gp = gp;
     }
 
-    public void setAction(){
+    public void setAction(){}
+    public void speak(){
+        if(dialogues[dialogueIndex] == null){
+            dialogueIndex = 0;
+        }
+        gp.ui.currentDialogue = dialogues[dialogueIndex];
+        dialogueIndex ++;
 
+        switch(gp.player.direction){
+            case "up":
+                direction = "down";
+                break;
+            case "down":
+                direction = "up";
+                break;
+            case "left":
+                direction = "right";
+                break;
+            case "right":
+                direction = "left";
+                break;
+        }
     }
 
     public void update(){

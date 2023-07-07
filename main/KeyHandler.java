@@ -7,7 +7,7 @@ import javax.swing.DebugGraphics;
 public class KeyHandler implements KeyListener{
 
     GamePanel gp;
-    public boolean upPressed, downPressed, leftPressed, rightPressed;
+    public boolean upPressed, downPressed, leftPressed, rightPressed, enterPressed;
     boolean checkDrawTime = false;
 
     public KeyHandler(GamePanel gp){
@@ -22,37 +22,78 @@ public class KeyHandler implements KeyListener{
     @Override
     public void keyPressed(KeyEvent e) {
         int code = e.getKeyCode();
-
-        if(code == KeyEvent.VK_W || code == KeyEvent.VK_UP){
-            upPressed = true;
-        }
-
-        if(code == KeyEvent.VK_S || code == KeyEvent.VK_DOWN){
-            downPressed = true;
-        }
-
-        if(code == KeyEvent.VK_A || code == KeyEvent.VK_LEFT){
-            leftPressed = true;
-        }
-
-        if(code == KeyEvent.VK_D || code == KeyEvent.VK_RIGHT){
-            rightPressed = true;
-        }
-        if(code == KeyEvent.VK_P){
-            //rightPressed = true;
-            if(gp.gameState == gp.playState){
-                gp.gameState = gp.pauseState;
-            }else if(gp.gameState == gp.pauseState){
-                gp.gameState = gp.pauseState;
+        //TITLE STATE
+        if(gp.gameState == gp.titleState){
+            if(code == KeyEvent.VK_W || code == KeyEvent.VK_UP){
+                gp.ui.commandNum --;
+                if(gp.ui.commandNum < 0){
+                    gp.ui.commandNum = 2;
+                }
+            }
+            if(code == KeyEvent.VK_S || code == KeyEvent.VK_DOWN){
+                gp.ui.commandNum ++;
+                if(gp.ui.commandNum > 2){
+                    gp.ui.commandNum = 0;
+                }
+            }
+            if(code == KeyEvent.VK_ENTER){
+                if(gp.ui.commandNum==0){
+                    gp.gameState = gp.playState;
+                    gp.playMusic(0);
+                }
+                if(gp.ui.commandNum==1){
+                    
+                }
+                if(gp.ui.commandNum==2){
+                    System.exit(0);
+                }
             }
         }
 
-        //DEBUG
-        if(code == KeyEvent.VK_T){
-            if(checkDrawTime == false){
-                checkDrawTime=true;
-            }else if(checkDrawTime){
-                checkDrawTime = false;
+        //PLAY STATE
+        if(gp.gameState == gp.playState){
+            if(code == KeyEvent.VK_W || code == KeyEvent.VK_UP){
+                upPressed = true;
+            }
+    
+            if(code == KeyEvent.VK_S || code == KeyEvent.VK_DOWN){
+                downPressed = true;
+            }
+    
+            if(code == KeyEvent.VK_A || code == KeyEvent.VK_LEFT){
+                leftPressed = true;
+            }
+    
+            if(code == KeyEvent.VK_D || code == KeyEvent.VK_RIGHT){
+                rightPressed = true;
+            }
+            if(code == KeyEvent.VK_P){
+                gp.gameState = gp.pauseState;
+            }
+            if(code == KeyEvent.VK_ENTER){
+                enterPressed = true;
+            }
+    
+            //DEBUG
+            if(code == KeyEvent.VK_T){
+                if(checkDrawTime == false){
+                    checkDrawTime=true;
+                }else if(checkDrawTime){
+                    checkDrawTime = false;
+                }
+            }
+        }
+        //PAUSE STATE
+        else if(gp.gameState == gp.pauseState){
+            if(code == KeyEvent.VK_P){
+                gp.gameState = gp.playState;
+            }
+        }
+
+        //DIALOGUE STATE
+        else if(gp.gameState == gp.dialogueState){
+            if(code == KeyEvent.VK_ENTER){
+                gp.gameState = gp.playState;
             }
         }
 
