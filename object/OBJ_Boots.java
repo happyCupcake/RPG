@@ -9,7 +9,7 @@ public class OBJ_Boots extends Entity{
 
         super(gp);
         name = "Boots";
-        down1 = setup("imgs/boots.png");
+        down1 = setup("boots");
     }
     
 }

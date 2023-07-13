@@ -2,14 +2,10 @@ package main;
 
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
-import java.text.DecimalFormat;
-
-import javax.tools.Diagnostic;
 
 import entity.Entity;
 import object.OBJ_Heart;
 import object.OBJ_Key;
-import object.SuperObject;
 
 import java.awt.BasicStroke;
 import java.awt.Color;

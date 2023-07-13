@@ -9,9 +9,16 @@ public class OBJ_Door extends Entity{
 
         super(gp);
         name = "Door";
-        down1 = setup("imgs/door.png");
+        down1 = setup("door");
         
         collision = true;
+
+        solidArea.x = 0;
+        solidArea.y = 16;
+        solidArea.width = 48;
+        solidArea.height = 32;
+        solidAreaDefaultX = solidArea.x;
+        solidAreaDefaultY = solidArea.y;
 
     }
     
