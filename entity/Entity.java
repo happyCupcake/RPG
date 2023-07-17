@@ -7,6 +7,7 @@ import javax.imageio.ImageIO;
 import main.GamePanel;
 import main.UtilityTool;
 
+import java.awt.AlphaComposite;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 
@@ -120,6 +121,14 @@ public class Entity {
             }
             spriteCounter=0;
         }
+
+        if(invincible){
+            invincibleCounter++;
+            if(invincibleCounter > 30){
+                invincible = false;
+                invincibleCounter = 0;
+            }
+        }
     }
     public void draw(Graphics2D g2){
 
@@ -162,8 +171,12 @@ public class Entity {
                 }
                 
             }
-    
+            if(invincible){
+                g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.5f));
+            }
             g2.drawImage(image,screenX, screenY, gp.tileSize, gp.tileSize, null);
+            g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
+
         }
     }
 
