@@ -9,7 +9,7 @@ public class OBJ_Key extends Entity{
 
         super(gp);
         name = "Key";
-        down1 = setup("imgs/key.png");
+        down1 = setup("imgs/key.png", gp.tileSize, gp.tileSize);
 
     }
 }

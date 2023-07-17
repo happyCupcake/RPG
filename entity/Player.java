@@ -50,6 +50,7 @@ public class Player extends Entity{
 
         setDefaultValues();
         getPlayerImage();
+        getPlayerAttackImage();
     }
     public void setDefaultValues(){
         worldX = gp.tileSize*23;
@@ -64,18 +65,29 @@ public class Player extends Entity{
 
     public void getPlayerImage(){
 
-        up1 = setup("player/boy_back_1");
-        up2 = setup("player/boy_back_2");
-        down1 = setup("player/boy_forward_1");
-        down2 = setup("player/boy_forward_2");
-        left1 = setup("player/boy_left_1");
-        left2 = setup("player/boy_left_2");
-        right1 = setup("player/boy_right_1");
-        right2 = setup("player/boy_right_2");
+        up1 = setup("player/boy_back_1", gp.tileSize, gp.tileSize);
+        up2 = setup("player/boy_back_2", gp.tileSize, gp.tileSize);
+        down1 = setup("player/boy_forward_1", gp.tileSize, gp.tileSize);
+        down2 = setup("player/boy_forward_2", gp.tileSize, gp.tileSize);
+        left1 = setup("player/boy_left_1", gp.tileSize, gp.tileSize);
+        left2 = setup("player/boy_left_2", gp.tileSize, gp.tileSize);
+        right1 = setup("player/boy_right_1", gp.tileSize, gp.tileSize);
+        right2 = setup("player/boy_right_2", gp.tileSize, gp.tileSize);
         
     }
 
-    public BufferedImage setup(String imageName){
+    public void getPlayerAttackImage(){
+        attackUp1 = setup("player/boy_attack_up1", gp.tileSize, gp.tileSize);
+        attackUp2 = setup("player/boy_attack_up2", gp.tileSize, gp.tileSize);
+        attackDown1 = setup("player/boy_attack_down1", gp.tileSize, gp.tileSize);
+        attackDown2 = setup("player/boy_attack_down2", gp.tileSize, gp.tileSize);
+        attackLeft1 = setup("player/boy_attack_left1", gp.tileSize, gp.tileSize);
+        attackLeft2 = setup("player/boy_attack_left2", gp.tileSize, gp.tileSize);
+        attackRight1 = setup("player/boy_attack_right1", gp.tileSize, gp.tileSize);
+        attackRight2 = setup("player/boy_attack_right2", gp.tileSize, gp.tileSize);
+    }
+
+    /*public BufferedImage setup(String imageName){
         UtilityTool uTool = new UtilityTool();
         BufferedImage image = null;
 
@@ -87,10 +99,14 @@ public class Player extends Entity{
         }
         return image;
 
-    }
+    }*/
 
     public void update(){
-        if(keyH.upPressed || keyH.downPressed || keyH.leftPressed || keyH.rightPressed){
+
+        if(attacking == true){
+            attacking();
+        }
+        else if(keyH.upPressed || keyH.downPressed || keyH.leftPressed || keyH.rightPressed || keyH.enterPressed ){
             if(keyH.upPressed){
                 direction = "up";
                 //worldY -= speed;
@@ -123,10 +139,9 @@ public class Player extends Entity{
 
             //CHECK EVENT 
             gp.eHandler.checkEvent();
-            keyH.enterPressed = false;
 
             //IF COLLISION IS FALSE, PLAYER CAN MOVE
-            if(collisionOn == false){
+            if(collisionOn == false && keyH.enterPressed == false){
                 switch(direction){
                     case "up":
                         worldY -= speed;
@@ -142,6 +157,8 @@ public class Player extends Entity{
                         break;  
                 }
             }
+
+            keyH.enterPressed = false;
     
             spriteCounter++;
             if(spriteCounter>12){
@@ -166,6 +183,19 @@ public class Player extends Entity{
     
     }
 
+    public void attacking(){
+        spriteCounter++;
+        if(spriteCounter <= 5){
+            spriteNum = 1;
+        }if(spriteCounter > 5 && spriteCounter <= 25){
+            spriteNum = 2;
+        }if(spriteCounter > 25){
+            spriteNum = 1;
+            spriteCounter = 0;
+            attacking = false;
+        }
+    }
+
     public void pickUpObject(int i){
         if(i != 999){
 
@@ -173,10 +203,14 @@ public class Player extends Entity{
     }
 
     public void interactNPC(int i){
-        if(i!=999) {
-            //System.out.println("NPC Touched");
-            gp.gameState = gp.dialogueState;
-            gp.npc[i].speak();
+        if(gp.keyH.enterPressed){
+            if(i!=999) {
+                gp.gameState = gp.dialogueState;
+                gp.npc[i].speak();
+            
+            }else{
+                attacking = true;
+            }
         }
     }
 
@@ -194,39 +228,70 @@ public class Player extends Entity{
         //g2.fillRect(x, y, gp.tileSize, gp.tileSize);
         BufferedImage image = null;
 
-        if(direction == "up"){
-            if(spriteNum==1){
-                image = up1;
-                //System.out.println("up1");
+        if(attacking){
+            if(direction == "up"){
+                if(spriteNum==1){
+                    image = attackUp1;
+                }
+                if(spriteNum ==2){
+                    image = attackUp2;
+                }
+            }if(direction == "down"){
+                if(spriteNum==1){
+                    image = attackDown1;
+                }
+                if(spriteNum==2){
+                    image = attackDown2;
+                }
+            }if(direction == "left"){
+                if(spriteNum==1){
+                    image = attackLeft1;
+                }if(spriteNum==2){
+                    image = attackLeft2;
+                }
+            }if(direction == "right"){
+                if(spriteNum==1){
+                    image = attackRight1;
+                }if(spriteNum==2){
+                    image = attackRight2;
+                }
+                
             }
-            if(spriteNum ==2){
-                image = up2;
-                //System.out.println("up2");
+
+        }if(!attacking){
+            if(direction == "up"){
+                if(spriteNum==1){
+                    image = up1;
+                }
+                if(spriteNum ==2){
+                    image = up2;
+                }
+            }if(direction == "down"){
+                if(spriteNum==1){
+                    image = down1;
+                }
+                if(spriteNum==2){
+                    image = down2;
+                }
+            }if(direction == "left"){
+                if(spriteNum==1){
+                    image = left1;
+                }if(spriteNum==2){
+                    image = left2;
+                }
+            }if(direction == "right"){
+                if(spriteNum==1){
+                    image = right1;
+                }if(spriteNum==2){
+                    image = right2;
+                }
+                
             }
-        }if(direction == "down"){
-            if(spriteNum==1){
-                image = down1;
-            }
-            if(spriteNum==2){
-                image = down2;
-            }
-        }if(direction == "left"){
-            if(spriteNum==1){
-                image = left1;
-            }if(spriteNum==2){
-                image = left2;
-            }
-        }if(direction == "right"){
-            if(spriteNum==1){
-                image = right1;
-            }if(spriteNum==2){
-                image = right2;
-            }
-            
+
         }
 
         if(invincible){
-            g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.4f));
+            g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.5f));
         }
         g2.drawImage(image, screenX, screenY, null);
 

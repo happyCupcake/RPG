@@ -27,14 +27,14 @@ public class MON_GreenSlime extends Entity {
     }
 
     public void getImage(){
-        up1 = setup("/greenslime_down1");
-        up2 = setup("/greenslime_down2");
-        down1 = setup("/greenslime_down1");
-        down2 = setup("/greenslime_down2");
-        left1 = setup("/greenslime_down1");
-        left2 = setup("/greenslime_down2");
-        right1 = setup("/greenslime_down1");
-        right2 = setup("/greenslime_down2");
+        up1 = setup("/greenslime_down1", gp.tileSize, gp.tileSize);
+        up2 = setup("/greenslime_down2", gp.tileSize, gp.tileSize);
+        down1 = setup("/greenslime_down1", gp.tileSize, gp.tileSize);
+        down2 = setup("/greenslime_down2", gp.tileSize, gp.tileSize);
+        left1 = setup("/greenslime_down1", gp.tileSize, gp.tileSize);
+        left2 = setup("/greenslime_down2", gp.tileSize, gp.tileSize);
+        right1 = setup("/greenslime_down1", gp.tileSize, gp.tileSize);
+        right2 = setup("/greenslime_down2", gp.tileSize, gp.tileSize);
 
     }
 
