@@ -45,6 +45,9 @@ public class Player extends Entity{
         solidArea.width = (gp.tileSize*5)/12;
         solidArea.height = (gp.tileSize*5)/12;
 
+        attackArea.width = 36;
+        attackArea.height = 36;
+
         solidAreaDefaultX = solidArea.x;
         solidAreaDefaultY = solidArea.y;
 
@@ -224,12 +227,14 @@ public class Player extends Entity{
     }
 
     public void draw(Graphics2D g2){
-        // g2.setColor(Color.white);
-        //g2.fillRect(x, y, gp.tileSize, gp.tileSize);
+
         BufferedImage image = null;
+        int tempScreenX = screenX;
+        int tempScreenY = screenY;
 
         if(attacking){
             if(direction == "up"){
+                // tempScreenY = screenY - gp.tileSize;
                 if(spriteNum==1){
                     image = attackUp1;
                 }
@@ -244,6 +249,7 @@ public class Player extends Entity{
                     image = attackDown2;
                 }
             }if(direction == "left"){
+                //tempScreenX = screenX - gp.tileSize;
                 if(spriteNum==1){
                     image = attackLeft1;
                 }if(spriteNum==2){
@@ -293,7 +299,7 @@ public class Player extends Entity{
         if(invincible){
             g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.5f));
         }
-        g2.drawImage(image, screenX, screenY, null);
+        g2.drawImage(image, tempScreenX, tempScreenY, null);
 
         g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
 
