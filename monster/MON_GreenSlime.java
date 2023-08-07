@@ -6,6 +6,9 @@ import entity.Entity;
 import main.GamePanel;
 
 public class MON_GreenSlime extends Entity {
+
+    String slimeDown = "/greenslime_down";
+
     public MON_GreenSlime(GamePanel gp){
         super(gp);
         name = "Green Slime";
@@ -27,14 +30,14 @@ public class MON_GreenSlime extends Entity {
     }
 
     public void getImage(){
-        up1 = setup("/greenslime_down1", gp.tileSize, gp.tileSize);
-        up2 = setup("/greenslime_down2", gp.tileSize, gp.tileSize);
-        down1 = setup("/greenslime_down1", gp.tileSize, gp.tileSize);
-        down2 = setup("/greenslime_down2", gp.tileSize, gp.tileSize);
-        left1 = setup("/greenslime_down1", gp.tileSize, gp.tileSize);
-        left2 = setup("/greenslime_down2", gp.tileSize, gp.tileSize);
-        right1 = setup("/greenslime_down1", gp.tileSize, gp.tileSize);
-        right2 = setup("/greenslime_down2", gp.tileSize, gp.tileSize);
+        up1 = setup(slimeDown+"1", gp.tileSize, gp.tileSize);
+        up2 = setup(slimeDown+"2", gp.tileSize, gp.tileSize);
+        down1 = setup(slimeDown+"1", gp.tileSize, gp.tileSize);
+        down2 = setup(slimeDown+"2", gp.tileSize, gp.tileSize);
+        left1 = setup(slimeDown+"1", gp.tileSize, gp.tileSize);
+        left2 = setup(slimeDown+"2", gp.tileSize, gp.tileSize);
+        right1 = setup(slimeDown+"1", gp.tileSize, gp.tileSize);
+        right2 = setup(slimeDown+"2", gp.tileSize, gp.tileSize);
 
     }
 
@@ -47,11 +50,14 @@ public class MON_GreenSlime extends Entity {
 
             if(i <= 25) {
                 direction = "up";
-            }if(i>25 && i<=50){
+            }
+            if(i>25 && i<=50){
                 direction = "down";
-            }if(i>50 && i<=75){
+            }
+            if(i>50 && i<=75){
                 direction = "left";
-            }if(i>75 && i<=100){
+            }
+            if(i>75 && i<=100){
                 direction = "right";
             }
             actionClockCounter = 0;
